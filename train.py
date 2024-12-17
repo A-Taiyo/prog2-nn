@@ -114,3 +114,5 @@ plt.ylabel('loss')
 plt.legend()
 plt.grid()
 plt.show()
+
+# 第14回課題用コメント追加
