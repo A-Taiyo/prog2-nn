@@ -9,6 +9,9 @@ import torchvision.transforms.v2 as transforms
 import models
 
 
+# GPUがあれば'cuda' なければ'cpu'というデバイス名を設定
+device = 'cuda' if torch.cuda.is_acailable() else 'cpu'
+
 # データセットの前処理を定義
 ds_transform = transforms.Compose([
     transforms.ToImage(),
@@ -52,8 +55,10 @@ dataloader_test = torch.utils.data.DataLoader(
 model = models.MyModel()
 
 # 精度を計算する
-acc_test = models.test_accuracy(model, dataloader_test)
+acc_test = models.test_accuracy(model, dataloader_test, device=device)
 print(f'test accuracy: {acc_test*100:.2f}%')
+acc_train = models.test_accuracy(model, dataloader_train, device=device)
+print(f'train accuracy: {acc_train*100:.3f}%')
 
 # 損失関数(誤差関数・ロス関数)の選択
 loss_fn = torch.nn.CrossEntropyLoss()
